@@ -5,15 +5,80 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            My Careers
-        </title>
-        <link rel="icon" type="image/x-icon" href="E:\Flask- Jovian course\Careers-website\favicon.png">
+        <title> My Careers </title>
+        <link rel="icon" type="image/x-icon" href="http://127.0.0.1:5000/static/favicon.png">
+        <style>
+            * {
+                font-family: 'Times New Roman', Times, serif;
+                color: black;
+                background-color: black;
+            }
+            h1 {
+                font-size: 40px;
+                font-weight: normal;
+                text-align: center;
+                color: rgb(134, 48, 48);
+            }
+            h2 {
+                font-size: 32px;
+                font-weight: normal;
+                text-align: center;
+                color: rgb(201, 71, 71);
+            }
+            h3 {
+                font-size: 24px;
+                font-weight: normal;
+                color: rgb(202, 74, 74);
+            }
+            #bannerImage {
+                width: 100%;
+                height: 350px;
+                object-fit: cover;
+            }
+            p {
+                font-size: medium;
+                color: azure;
+            }
+            button {
+                color: aqua;
+                background-color: maroon;
+                margin: 0 50%;
+            }
+            #main-container {
+                max-width: 70%;
+                margin: 0 15%;
+            }
+            #button {
+                text-align: center;
+            }
+        </style>
     </head>
     
 
     <body>
-        Namaskaram Unni, entha ingotekku okke?
+        <div id = "main-container">
+            <h1> My Careers </h1>
+            <hr>
+            <img id = "bannerImage" src="http://127.0.0.1:5000/static/banner.png">
+            <hr>
+            <h2> About Us </h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum 
+                has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+                took a galley of type and scrambled it to make a type specimen book. It has survived not 
+                only five centuries, but also the leap into electronic typesetting, remaining essentially 
+                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
+                Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker 
+                including versions of Lorem Ipsum.
+            </p>
+            <hr>
+            <h2> Job Listings </h2>
+            <h3> TODO: Show jobs here ...<h3>
+            <hr>
+            <div id = "button">
+                <button> Contact us </button>
+            </div>
+        </div>
     </body>
 
 </html>
