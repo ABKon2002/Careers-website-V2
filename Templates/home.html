@@ -22,36 +22,64 @@
                 color: lightgrey;
                 text-align: center;
             }
+            #apply-button {
+                margin-top: 3%;
+            }
+            #c-us-button {
+                margin-top: 25px;
+            }
+            .about-us {
+                margin-top: 5px;
+            }
+            .JobDetails {
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+            .absBod {
+                text-align: justify;
+            }
         </style>
     </head>
     
 
     <body>
         <div class = "container">
+
+            <!-- Website Title-->
             <h1 class = "text-center mt-2 mb-3"> My Careers </h1>
             <hr>
+
+            <!-- Banner Image -->
             <img id = "bannerImage" class = "img-fluid" src="http://127.0.0.1:5000/static/banner.png">
-            <hr>
-            <h2 class = "text-center"> About Us </h2>
-            <p div = "bodyText" class = "lead">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum 
-                has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
-                took a galley of type and scrambled it to make a type specimen book. It has survived not 
-                only five centuries, but also the leap into electronic typesetting, remaining essentially 
-                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
-                Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker 
-                including versions of Lorem Ipsum.
-            </p>
-            <hr>
+
+            <!-- About us -->
+            <div class="about-us">
+                <h2 class="text-center"> About Us </h2>
+            </div>
+            <div class = "bodyText">
+                <p class = "lead absBod">
+                    {% for sentence in abtUs: %}
+                        {{sentence}}
+                    {% endfor %}
+                </p>
+            </div>
+
+            <!-- Job Openings -->
             <h2 class = "text-center"> Job Listings </h2>
-            <h3 div = "bodyText"> TODO: Show jobs here ...<h3>
-            <hr>
-            <div class = "text-center" id = "button">
+            {% for job in jobs %}
+                {% include 'Job_details.html' %}
+            {% endfor %}
+
+            <!-- Contact us -->
+            <div class = "text-center" id = "c-us-button">
                 <button class="btn btn-primary btn-lg"> Contact us </button>
             </div>
+
+            <!-- Copyright -->
             <div id = "copyright" class = "mt-2">
                 <p> Copyright 2024, Kalakkan Ent.</p>
             </div>
+
         </div>
     </body>
 
