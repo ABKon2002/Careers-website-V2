@@ -7,15 +7,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> My Careers </title>
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href={{hURL + "/static/favicon.png"}}>
+        <link rel="icon" type="image/x-icon" href="/static/favicon.png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
         rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
         crossorigin="anonymous">
         <style>
-            #banner {
+            #bannerImage {
                 height: 350px;
                 object-fit: cover;
                 width: 100%;
+                margin-bottom: 10px;
             }
             #copyright {
                 font-size: 10px;
@@ -27,6 +28,9 @@
             }
             #c-us-button {
                 margin-top: 25px;
+            }
+            #peopleImage {
+                object-fit: cover;
             }
             .about-us {
                 margin-top: 5px;
@@ -46,38 +50,44 @@
     
 
     <body>
+        {% include 'navbar.html' %}
+        <!-- Banner Image -->
+        <img id = "bannerImage" class = "img-fluid" src="/static/banner.png">
+
         <div class = "container">
 
             <!-- Website Title-->
             <h1 class = "text-center mt-2 mb-3"> My Careers </h1>
             <hr>
 
-            <!-- Banner Image -->
-            <img id = "bannerImage" class = "img-fluid" src={{hURL+"/static/banner.png"}}>
-
             <!-- About us -->
             <div class="about-us">
                 <h2 class="text-center"> About Us </h2>
             </div>
-            <div class = "bodyText">
-                <p class = "lead absBod">
-                    {% for sentence in abtUs: %}
-                        {{sentence}}
-                    {% endfor %}
-                </p>
+            <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class = "bodyText col-7">
+                    <p class = "lead absBod">
+                        {% for sentence in abtUs: %}
+                            {{sentence}}
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class = "col-5">
+                    <img src="/static/people.jpg" height="350px" id="peopleImage">
+                </div>
             </div>
 
             <!-- Job Openings -->
             <h2 class = "text-center"> Job Listings </h2>
             <div class="job-item">
                 {% for job in jobs %}
-                    {% include 'Job_details.html' %}
+                    {% include 'Job_Item.html' %}
                 {% endfor %}
             </div>
 
             <!-- Contact us -->
             <div class = "text-center" id = "c-us-button">
-                <button class="btn btn-primary btn-lg"> Contact us </button>
+                <a type="button" class="btn btn-primary btn-lg" href="mailto:help@kalakkanENT.com?subject=Query%20about%20Kalakkan%20Careers&body=Name%3A%20%3CYour%20name%3E%0D%0AQuestion%3A%20%3CYour%20question%3E%0D%0ANote%3A%20Add%20relevant%20links%2C%20snaps%20with%20the%20email%20as%20well."> Contact us </button>
             </div>
 
             <!-- Copyright -->
@@ -86,6 +96,8 @@
             </div>
 
         </div>
+        {% include 'footer.html' %}
+
     </body>
 
 </html>
