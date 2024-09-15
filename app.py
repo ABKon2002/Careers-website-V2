@@ -3,6 +3,8 @@ from flask import Flask, render_template, jsonify
 
 app = Flask(__name__, template_folder="Templates")
 
+hosting_url = "https://mycareers-2nex.onrender.com"
+
 Jobs = [
     {
         "ID" : 1, 
@@ -40,7 +42,7 @@ about_us = [
 
 @app.route("/")
 def hello_world():
-    return render_template("home.html", jobs = Jobs, abtUs = about_us)
+    return render_template("home.html", hURL = hosting_url, jobs = Jobs, abtUs = about_us)
 
 @app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
 def job_details():
