@@ -1,36 +1,12 @@
 
 from flask import Flask, render_template, jsonify
+from database import aiven_engine, loadJobs
 
 app = Flask(__name__, template_folder="Templates")
 
 hosting_url = "https://mycareers-2nex.onrender.com"
 
-Jobs = [
-    {
-        "ID" : 1, 
-        "Role" : "Frontend Engineer", 
-        "Location" : "Bangalore, IND", 
-        "Salary" : "Rs. 10 LPA"
-    }, 
-    {
-        "ID" : 2, 
-        "Role" : "Web Developer", 
-        "Location" : "Bangalore, IND", 
-        "Salary" : "Rs. 8 LPA"
-    }, 
-    {
-        "ID" : 3, 
-        "Role" : "Backend Developer", 
-        "Location" : "Hyderabad, IND", 
-        "Salary" : "Rs. 11 LPA"
-    }, 
-    {
-        "ID" : 2, 
-        "Role" : "Data Analyst", 
-        "Location" : "Remote", 
-        "Salary" : "Rs. 9 LPA"
-    }
-]
+Jobs = loadJobs(aiven_engine)
 
 about_us = [
     "We believe in what people make possible.", 
@@ -47,21 +23,10 @@ about_us = [
 def hello_world():
     return render_template("home.html", hURL = hosting_url, jobs = Jobs, abtUs = about_us)
 
-@app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
-def job_details():
-    return jsonify(Jobs)
+# @app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
+# def job_details():
+#     return jsonify(Jobs)
 
-def add_job():
-    id = int(input("Enter Job ID: "))
-    role = input("Enter Role: ")
-    loc = input("Enter Location: ")
-    salary = input("Enter Salary: ")
-    Jobs.append({
-        "ID" : id, 
-        "Role" : role, 
-        "Location" : loc, 
-        "Salary" : salary
-    })
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug = True)
