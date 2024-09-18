@@ -26,15 +26,14 @@ def loadJobs(engine, query = "select * from jobs"):
             resDicts.append(resDict)
         return resDicts
 
-
-load_dotenv()
+database_url = os.environ.get('DATABASE_URL')
 
 # Access environment variables (Aiven DB credentials)
-db_host = os.getenv('DB_HOST')
-db_port = os.getenv('DB_PORT')
-db_name = os.getenv('DB_NAME')
-db_user = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
+db_host = os.environ.get('DB_HOST')
+db_port = os.environ.get('DB_PORT')
+db_name = os.environ.get('DB_NAME')
+db_user = os.environ.get('DB_USER')
+db_password = os.environ.get('DB_PASSWORD')
 
 aiven_engine = connectDBcred(db_host, db_port, db_user, db_password, db_name)
 jobs = loadJobs(aiven_engine)
