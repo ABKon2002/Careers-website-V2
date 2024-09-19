@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template, jsonify
-from database import aiven_engine, loadJobs
+from database import aiven_engine, loadJobs, loadJob
 
 app = Flask(__name__, template_folder="Templates")
 
@@ -30,6 +30,21 @@ def job_details():
     for i in range(len(Jobs)):
         Jobs[i] = dict(Jobs[i])
     return jsonify(Jobs)
+
+@app.route("/job/<ID>")
+def get_job_by_ID(ID):
+    Job = loadJob(aiven_engine, ID)
+    if Job:
+        # Splitting the requirements and responsibilities...
+        Job = dict(Job)
+        Job['Requirements'] = Job['Requirements'].split('.')
+        Job['Responsibilities'] = Job['Responsibilities'].split('.')
+        Job["Requirements"].pop(-1)
+        Job["Responsibilities"].pop(-1)
+        return render_template("Job_Page.html", job = Job)
+    else:
+        return f"No Job entry found under {ID} :(", 404
+
 
 
 if __name__ == "__main__":

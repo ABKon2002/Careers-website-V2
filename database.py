@@ -25,6 +25,16 @@ def loadJobs(engine, query = "select * from jobs"):
             resDicts.append(resDict)
         return resDicts
 
+def loadJob(engine, ID):
+    ''' Returns the entry of a job by its ID in the DB'''
+    with engine.connect() as conn:
+        result = conn.execute(text(f"Select * from jobs where ID = {ID}"))
+        result = result.all()
+        if len(result) == 0:
+            return None
+        else:
+            return result[0]._mapping
+
 database_url = os.environ.get('DATABASE_URL')
 
 # Access environment variables (Aiven DB credentials)
@@ -35,4 +45,4 @@ db_user = os.environ.get('DB_USER')
 db_password = os.environ.get('DB_PASSWORD')
 
 aiven_engine = connectDBcred(db_host, db_port, db_user, db_password, db_name)
-jobs = loadJobs(aiven_engine)
+# jobs = loadJobs(aiven_engine)
