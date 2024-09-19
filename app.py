@@ -21,11 +21,15 @@ about_us = [
 
 @app.route("/")
 def hello_world():
+    Jobs = loadJobs(aiven_engine)
     return render_template("home.html", hURL = hosting_url, jobs = Jobs, abtUs = about_us)
 
-# @app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
-# def job_details():
-#     return jsonify(Jobs)
+@app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
+def job_details():
+    Jobs = loadJobs(aiven_engine)
+    for i in range(len(Jobs)):
+        Jobs[i] = dict(Jobs[i])
+    return jsonify(Jobs)
 
 
 if __name__ == "__main__":
