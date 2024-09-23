@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from database import aiven_engine, loadJobs, loadJob
 
 app = Flask(__name__, template_folder="Templates")
@@ -37,14 +37,36 @@ def get_job_by_ID(ID):
     if Job:
         # Splitting the requirements and responsibilities...
         Job = dict(Job)
-        Job['Requirements'] = Job['Requirements'].split('.')
-        Job['Responsibilities'] = Job['Responsibilities'].split('.')
-        Job["Requirements"].pop(-1)
-        Job["Responsibilities"].pop(-1)
+        if Job["Requirements"]:
+            Job['Requirements'] = Job['Requirements'].split('.')
+            Job["Requirements"].pop(-1)
+        
+        if Job['Responsibilities']:
+            Job['Responsibilities'] = Job['Responsibilities'].split('.')
+            Job["Responsibilities"].pop(-1)
+        
         return render_template("Job_Page.html", job = Job)
     else:
         return f"No Job entry found under {ID} :(", 404
 
+@app.route("/job/<ID>/apply", methods = ['GET','POST'])
+def apply_job(ID):
+    job = loadJob(aiven_engine, ID)
+    if job:
+        return render_template('applicationForm.html', job = job)
+    else:
+        return "Job post expired"
+
+@app.route("/job/<ID>/submitted", methods = ['GET', 'POST'])
+def application_submitted(ID):
+    data = request.form
+    data = dict(data)
+    data['techStack'] = request.form.getlist('techStack')
+    return render_template('reviewApplication.html', data = data, ID = ID)
+
+@app.route("/job/<ID>/confirm", methods = ['POST'])
+def confirm_submission(ID):
+    return render_template('applicationSuccess.html', ID = ID)
 
 
 if __name__ == "__main__":

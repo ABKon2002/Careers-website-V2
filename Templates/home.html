@@ -12,6 +12,9 @@
         rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
         crossorigin="anonymous">
         <style>
+            html {
+                scroll-behavior: smooth;
+            }
             #bannerImage {
                 height: 350px;
                 object-fit: cover;
@@ -79,11 +82,13 @@
             </div>
 
             <!-- Job Openings -->
-            <h2 class = "text-center"> Job Listings </h2>
-            <div class="job-item">
-                {% for job in jobs %}
-                    {% include 'Job_Item.html' %}
-                {% endfor %}
+            <div id = "job-listings mt-4">
+                <h2 class = "text-center"> Job Listings </h2>
+                <div class="job-item">
+                    {% for job in jobs %}
+                        {% include 'Job_Item.html' %}
+                    {% endfor %}
+                </div>
             </div>
 
             <!-- Contact us -->
