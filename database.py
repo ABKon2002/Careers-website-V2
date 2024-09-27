@@ -45,7 +45,7 @@ def add_application_to_DB(engine, ID, application):
     age = int(application['age'])
     nationality = application['nationality']
     qualification = application['qualification']
-    tech_stack = '. '.join(application['techStack'])
+    tech_stack = ', '.join(application['techStack'])
     current_title = application['currentJob']
     current_employer = application['currentEmployer']
     current_salary = int(application['currentSalary'])

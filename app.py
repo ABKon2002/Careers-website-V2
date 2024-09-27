@@ -4,7 +4,7 @@ from database import aiven_engine, loadJobs, loadJob, add_application_to_DB
 import requests
 
 app = Flask(__name__, template_folder="Templates")
-
+global data
 hosting_url = "https://mycareers-2nex.onrender.com"
 
 Jobs = loadJobs(aiven_engine)
@@ -60,14 +60,16 @@ def apply_job(ID):
 
 @app.route("/job/<ID>/review", methods = ['GET', 'POST'])
 def application_submitted(ID):
+    global data               # Because of this, this application is not meant for multiple access. 
     data = request.form
     data = dict(data)
     data['techStack'] = request.form.getlist('techStack')
-    add_application_to_DB(aiven_engine, ID, data)
     return render_template('reviewApplication.html', data = data, ID = ID)
 
 @app.route("/job/<ID>/confirm", methods = ['POST'])
 def confirm_submission(ID):
+    global data
+    add_application_to_DB(aiven_engine, ID, data)
     return render_template('applicationSuccess.html', ID = ID)
 
 
