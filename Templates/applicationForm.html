@@ -32,20 +32,20 @@
     <!-- Application Form -->
     <div class="row mt-4">
         <div class="col-12">
-            <form class="application-form" action="/job/{{job['ID']}}/submitted" method="post">
+            <form class="application-form" action="/job/{{job['ID']}}/review" method="post">
                 <!-- Name Details (First, Middle (Optional), Last) -->
                 <div class="mb-3 row">
                     <div class="col-md-4">
                         <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" value="John" required>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
                     </div>
                     <div class="col-md-4">
                         <label for="middleName" class="form-label">Middle Name (Optional)</label>
-                        <input type="text" class="form-control" id="middleName" name="middleName">
+                        <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Name/Initial">
                     </div>
                     <div class="col-md-4">
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" value="Doe" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
                     </div>
                 </div>
 
@@ -54,19 +54,18 @@
                     <div class="col-md-4">
                         <label for="gender" class="form-label">Gender</label>
                         <select class="form-select" id="gender" name="gender" required>
-                            <option value="" disabled selected>Select your gender</option>
-                            <option value="Male" selected>Male</option>
+                            <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" name="age" min="18" value="22" required>
+                        <input type="number" class="form-control" id="age" name="age" min="18" max="60" placeholder="Age" required>
                     </div>
                     <div class="col-md-4">
                         <label for="nationality" class="form-label">Nationality</label>
-                        <input type="text" class="form-control" id="nationality" name="nationality" value="Indian" required>
+                        <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nationality" required>
                     </div>
                 </div>
 
@@ -74,7 +73,7 @@
                 <div class="mb-3">
                     <label for="qualification" class="form-label">Qualification</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="qualification" id="undergrad" value="Undergraduate" checked required>
+                        <input class="form-check-input" type="radio" name="qualification" id="undergrad" value="Undergraduate" required>
                         <label class="form-check-label" for="undergrad">Undergraduate</label>
                     </div>
                     <div class="form-check">
@@ -91,11 +90,11 @@
                 <div class="mb-3">
                     <label for="techStack" class="form-label">Comfortable Tech Stack</label>
                     <select class="form-select" id="techStack" name="techStack" multiple required>
-                        <option value="Python" selected>Python</option>
+                        <option value="Python">Python</option>
                         <option value="JavaScript">JavaScript</option>
                         <option value="Java">Java</option>
-                        <option value="C++" selected>C++</option>
-                        <option value="SQL" selected>SQL</option>
+                        <option value="C++">C++</option>
+                        <option value="SQL">SQL</option>
                         <option value="TensorFlow">TensorFlow</option>
                         <option value="PyTorch">PyTorch</option>
                         <option value="Node.js">Node.js</option>
@@ -107,15 +106,15 @@
                 <div class="mb-3 row">
                     <div class="col-md-4">
                         <label for="currentJob" class="form-label">Current Job Title</label>
-                        <input type="text" class="form-control" id="currentJob" name="currentJob" value="ASDE" required>
+                        <input type="text" class="form-control" id="currentJob" name="currentJob">
                     </div>
                     <div class="col-md-4">
                         <label for="currentEmployer" class="form-label">Current Employer</label>
-                        <input type="text" class="form-control" id="currentEmployer" name="currentEmployer" value="Gramener" required>
+                        <input type="text" class="form-control" id="currentEmployer" name="currentEmployer">
                     </div>
                     <div class="col-md-4">
                         <label for="currentSalary" class="form-label">Current Salary (Annual in INR)</label>
-                        <input type="number" class="form-control" id="currentSalary" name="currentSalary" value="1200000" required>
+                        <input type="number" class="form-control" id="currentSalary" name="currentSalary">
                     </div>
                 </div>
 

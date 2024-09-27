@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, jsonify, request
-from database import aiven_engine, loadJobs, loadJob
+from database import aiven_engine, loadJobs, loadJob, add_application_to_DB
+import requests
 
 app = Flask(__name__, template_folder="Templates")
 
@@ -57,11 +58,12 @@ def apply_job(ID):
     else:
         return "Job post expired"
 
-@app.route("/job/<ID>/submitted", methods = ['GET', 'POST'])
+@app.route("/job/<ID>/review", methods = ['GET', 'POST'])
 def application_submitted(ID):
     data = request.form
     data = dict(data)
     data['techStack'] = request.form.getlist('techStack')
+    add_application_to_DB(aiven_engine, ID, data)
     return render_template('reviewApplication.html', data = data, ID = ID)
 
 @app.route("/job/<ID>/confirm", methods = ['POST'])

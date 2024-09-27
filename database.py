@@ -35,6 +35,43 @@ def loadJob(engine, ID):
         else:
             return result[0]._mapping
 
+def add_application_to_DB(engine, ID, application):
+    """ Adds an input application dictionary into the applications table in the DB """
+
+    first_name = application['firstName']
+    middle_name = application['middleName']
+    last_name = application['lastName']
+    gender = application['gender']
+    age = int(application['age'])
+    nationality = application['nationality']
+    qualification = application['qualification']
+    tech_stack = '. '.join(application['techStack'])
+    current_title = application['currentJob']
+    current_employer = application['currentEmployer']
+    current_salary = int(application['currentSalary'])
+
+    query = "INSERT INTO applications(Job_ID, First_name, Middle_name, Last_name, Gender, Age, Nationality, Qualification, Tech_stack, Current_title, Current_Employer, Current_salary) VALUES (:job_id, :first_name, :middle_name, :last_name, :gender, :age, :nationality, :qualification, :techStack, :current_title, :current_employer, :current_salary)"
+    
+    params = {
+    "job_id": ID,
+    "first_name": first_name,
+    "middle_name": middle_name,
+    "last_name": last_name,
+    "gender": gender,
+    "age": age,
+    "nationality": nationality,
+    "qualification": qualification,
+    "techStack": tech_stack,
+    "current_title": current_title,
+    "current_employer": current_employer,
+    "current_salary": current_salary
+    }
+
+    with engine.connect() as conn:
+        conn.execute(text(query), params)
+        conn.commit()
+
+
 database_url = os.environ.get('DATABASE_URL')
 
 # Access environment variables (Aiven DB credentials)
@@ -45,4 +82,3 @@ db_user = os.environ.get('DB_USER')
 db_password = os.environ.get('DB_PASSWORD')
 
 aiven_engine = connectDBcred(db_host, db_port, db_user, db_password, db_name)
-# jobs = loadJobs(aiven_engine)
