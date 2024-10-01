@@ -71,6 +71,33 @@ def add_application_to_DB(engine, ID, application):
         conn.execute(text(query), params)
         conn.commit()
 
+def check_username(engine, username):
+    """Checks is another user exists with the same username."""
+    with engine.connect() as conn:
+        query = f"Select * from Users where User_name = {username}"
+        result = conn.execute(text(query))
+        result = result.all()
+        if len(result) == 0:
+            return False
+        return True
+    
+def add_user(engine, user):
+    """Adds a registered user to the DB"""
+    with engine.connect() as conn:
+        query = f"Insert into Users(User_name, Passkey) values (:username, :password)"
+        conn.execute(text(query), user)
+        conn.commit()
+
+def return_existing_username(engine, username):
+    """Return a username if it exists in the DB"""
+    with engine.connect() as conn:
+        query = f"Select * from Users where User_name = '{username}'"
+        result = conn.execute(text(query))
+        result = result.all()
+        if len(result) == 0:
+            return False
+        return result[0]    # Returns just the username form the records. 
+
 
 database_url = os.environ.get('DATABASE_URL')
 
