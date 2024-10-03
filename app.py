@@ -80,6 +80,12 @@ def login():
 def test123():
     return "You are logged in..."
 
+@app.route("/logout", methods = ['POST', 'GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route("/api/jobs")    # api-endpoint 1.0: Returns job details as json
 def job_details():
     Jobs = DO.loadJobs()
