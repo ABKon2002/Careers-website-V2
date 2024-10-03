@@ -105,3 +105,17 @@ class DataOperations:
             if len(result) == 0:
                 return False
             return result[0]    # Returns a tuple of the user data.
+
+    def applications_by_job(self):
+        """Returns the available applications categorized by the Job IDs"""
+        with self.engine.connect() as conn:
+            query = '''select A.Application_ID as ID, J.ID as Job_ID, J.Title, 
+                    A.first_name, A.Last_Name, A.Gender, A.Age, A.Nationality, 
+                    A.Qualification from jobs as J join applications as A on 
+                    J.ID = A.Job_ID order by Job_ID'''
+            result = conn.execute(text(query))
+            result = result.all()
+            applications_by_job = {}
+            for application in result:
+                pass
+

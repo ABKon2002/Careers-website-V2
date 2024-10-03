@@ -20,7 +20,7 @@ login_manager.login_view = 'login'
 DO = DataOperations()
 
 global data
-hosting_url = "https://mycareers-2nex.onrender.com"
+hosting_url = "https://mycareers-dit2.onrender.com/"
 
 # Jobs = DO.loadJobs()
 
@@ -133,6 +133,9 @@ def confirm_submission(ID):
     DO.add_application_to_DB(ID, data)
     return render_template('applicationSuccess.html', ID = ID)
 
+@app.route("/admin")
+def admin_dashboard():
+    return render_template('adminDashboard.html')
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug = True)
