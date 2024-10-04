@@ -133,9 +133,23 @@ def confirm_submission(ID):
     DO.add_application_to_DB(ID, data)
     return render_template('applicationSuccess.html', ID = ID)
 
-@app.route("/admin")
+@app.route("/admin")   # Make it require login
 def admin_dashboard():
     return render_template('adminDashboard.html')
+
+@app.route("/applications")     # Make it require login
+def view_applications():
+    JobList = DO.applications_by_job()
+    return render_template('Applicationview.html', applications_by_job = JobList)
+
+@app.route("/applicant/<app_ID>/review")
+def review_applicant(app_ID):
+    application = DO.loadApplication(app_ID)
+    application = dict(application)
+    if application['Tech_stack']:
+        application['Tech_stack'] = list(application['Tech_stack'].split('. '))
+    return render_template('ApplicantDetails.html', application = application)
+
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug = True)

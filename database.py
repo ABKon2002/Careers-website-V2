@@ -42,6 +42,16 @@ class DataOperations:
             else:
                 return result[0]._mapping
     
+    def loadApplication(self, app_ID):
+        '''Returns the application of an applicant by its application ID'''
+        with self.engine.connect() as conn:
+            result = conn.execute(text(f"Select * from applications where Application_ID = {app_ID}"))
+            result = result.all()
+            if len(result) == 0:
+                return None
+            else:
+                return result[0]._mapping
+    
     def add_application_to_DB(self, ID, application):
         """ Adds an input application dictionary into the applications table in the DB."""
         first_name = application['firstName']
@@ -115,7 +125,35 @@ class DataOperations:
                     J.ID = A.Job_ID order by Job_ID'''
             result = conn.execute(text(query))
             result = result.all()
-            applications_by_job = {}
+            JobList = {}
             for application in result:
-                pass
+                # Unpacking the tuple returned
+                Application_ID = application[0]
+                JID = application[1]
+                Role = application[2]
+                First_name = application[3]
+                Last_name = application[4]
+                Gender = application[5]
+                Age = application[6]
+                Nationality = application[7]
+                Qualification = application[8]
+                mapped_application = {
+                    'ID' : Application_ID,
+                    'Job_ID' : JID,
+                    'Role' : Role,
+                    'First_name' : First_name,
+                    'Last_name' : Last_name,
+                    'Gender' : Gender,
+                    'Age' : Age,
+                    'Nationality' : Nationality,
+                    'Qualification' : Qualification
+                }
+                if JID in JobList:
+                    JobList[JID].append(mapped_application)
+                else:
+                    JobList[JID] = [mapped_application]
+            return JobList
 
+DO = DataOperations()
+# print(DO.applications_by_job())
+# print(DO.loadApplication(16)['Tech_stack'].split('. '))

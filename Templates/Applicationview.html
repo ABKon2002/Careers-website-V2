@@ -29,12 +29,16 @@
         .application-card h5 {
             font-size: 1.3rem;
         }
+        .application-card:hover{
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
         .card-icon {
             font-size: 2.5rem;
             color: #007bff;
         }
         .card-footer {
-            text-align: right;
+            text-align: center;
         }
     </style>
 </head>
@@ -44,19 +48,22 @@
 
         {% for job_id, applications in applications_by_job.items() %}
         <div class="job-category">
-            <h2 class="job-title">Job ID: {{ job_id }}</h2>
+            <h2 class="job-title">Job ID: {{ job_id }} ({{applications[0]['Role']}})</h2>
             <div class="row">
                 {% for app in applications %}
                 <div class="col-md-6 col-lg-4">
                     <div class="application-card">
                         <div class="card-body">
-                            <h5>{{ app['name'] }}</h5>
-                            <p>Email: {{ app['email'] }}</p>
-                            <p>Phone: {{ app['phone'] }}</p>
-                            <p>Skills: {{ ', '.join(app['skills']) }}</p>
+                            <h5>{{ app['First_name']}} {{ app['Last_name']}}</h5>
+                            <div class="row">
+                                <p class = 'col-md-6'>Gender: {{ app['Gender'] }}</p>
+                                <p class = 'col-md-6'>Age: {{ app['Age'] }}</p>
+                            </div>
+                            <p>Nationality: {{ app['Nationality'] }}</p>
+                            <p>Qualification: {{ app['Qualification'] }}</p>
                         </div>
                         <div class="card-footer">
-                            <a href="#" class="btn btn-primary">View Full Details</a>
+                            <a href="/applicant/{{app['ID']}}/review" class="btn btn-primary">View Full Details</a>
                         </div>
                     </div>
                 </div>
