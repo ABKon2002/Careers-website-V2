@@ -87,9 +87,21 @@ class DataOperations:
             conn.execute(text(query), params)
             conn.commit()
             return 1
+    
+    def add_job(self, JobMeta):
+        """ Adds an input Job entry dictionary into the jobs table in the DB."""
+
+        query = """INSERT INTO jobs(Title, Location, Salary, Currency, Requirements, 
+        Responsibilities) VALUES (:title, :location, :salary, 'Rs.', :requirements, 
+        :responsibilities)"""
+
+        with self.engine.connect() as conn:
+            conn.execute(text(query), JobMeta)
+            conn.commit()
+            return 1
 
     def check_username(self, username):
-        """Checks is another user exists with the same username."""
+        """Checks if another user exists with the same username."""
         with self.engine.connect() as conn:
             query = f"Select * from Users where User_name = {username}"
             result = conn.execute(text(query))

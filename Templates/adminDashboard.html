@@ -9,20 +9,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
         }
         .dashboard-container {
             margin: 20px auto;
             padding: 20px;
         }
         .card {
+            background-color: #40405f;
             text-align: center;
             padding: 20px;
             border: 1px solid #ddd;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .card:hover {
-            background-color: #f1f1f1;
+            background-color: #0d0d13;
             cursor: pointer;
             transform: scale(1.05);
             transition: transform 0.3s ease;
@@ -58,7 +60,7 @@
 
             <!-- Add Job Listing Card -->
             <div class="col-md-4">
-                <a href="" class="text-decoration-none">
+                <a href="/add/job" class="text-decoration-none">
                     <div class="card">
                         <div class="card-icon">
                             <i class="bi bi-plus-square-fill"></i>
@@ -70,7 +72,7 @@
 
             <!-- Logout Card -->
             <div class="col-md-4">
-                <a href="" class="text-decoration-none">
+                <a href="{{url_for('logout')}}" class="text-decoration-none">
                     <div class="card">
                         <div class="card-icon">
                             <i class="bi bi-box-arrow-right"></i>
@@ -81,6 +83,8 @@
             </div>
         </div>
     </div>
+    
+    {% include 'footer.html' %}
 
     <!-- Bootstrap JS and Icons -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
