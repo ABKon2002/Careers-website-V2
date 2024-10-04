@@ -72,13 +72,13 @@ def login():
             password = existing_username[2]
             if b_crypt.check_password_hash(password, form.password.data):
                 login_user(User(id, username, password))
-                return redirect(url_for('test123'))
+                return redirect(url_for('admin_dashboard'))
     return render_template('login.html', form = form)
 
-@app.route("/test123", methods = ['POST', 'GET'])
-@login_required
-def test123():
-    return "You are logged in..."
+# @app.route("/test123", methods = ['POST', 'GET'])
+# @login_required
+# def test123():
+#     return "You are logged in..."
 
 @app.route("/logout", methods = ['POST', 'GET'])
 @login_required
@@ -150,6 +150,16 @@ def review_applicant(app_ID):
         application['Tech_stack'] = list(application['Tech_stack'].split('. '))
     return render_template('ApplicantDetails.html', application = application)
 
+@app.route("/add/job")
+def add_job_form():
+    return render_template('AddJob.html')
+
+@app.route("/admin/add_job", methods = ['POST'])
+def add_job():
+    data = request.form
+    data = dict(data)
+    DO.add_job(data)
+    return render_template('JobEntrySuccess.html')
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug = True)
