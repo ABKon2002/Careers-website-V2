@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Job Listings</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            body {
+            background-color: #f8f9fa; /* Light background for contrast */
+            padding: 20px;
+            }
+
+            .job-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .job-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .job-details {
+            flex-grow: 1;
+            }
+
+            .job-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 5px;
+            }
+
+            .job-location,
+            .job-salary {
+            color: #6c757d;
+            margin-bottom: 5px;
+            }
+
+            .explore-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            text-decoration: none; /* No underline for links */
+            cursor: pointer;
+            }
+
+            .explore-btn:hover {
+            background-color: #0056b3;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h2 class="text-center mb-5">Job Openings</h2>
+
+            <!-- Loop through job list -->
+            <!-- Example loop with dummy job data -->
+            <div id="job-listings">
+            {% for job in jobs %}
+                {% include 'Job/Job_Card.html' %}
+            {% endfor %}
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

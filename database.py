@@ -21,7 +21,7 @@ class DataOperations:
         else:
             print("Database Connection failed!")
     
-    def loadJobs(self, query = "select * from jobs"):
+    def loadJobs(self, query = "select * from jobs limit 5"):
         ''' Returns the list of jobs in the DB. Can ask other queries using query = param as well.'''
         with self.engine.connect() as conn:
             result = conn.execute(text(query))

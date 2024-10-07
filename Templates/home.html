@@ -46,12 +46,19 @@
             .absBod {
                 text-align: justify;
             }
+            .weak-text {
+                font-weight: lighter;
+                color: rgb(108, 104, 104);
+                text-align: center;
+            }
         </style>
     </head>
     
 
     <body>
-        {% include 'navbar.html' %}
+        
+        {% include 'darkNavbar.html' %}
+        
         <!-- Banner Image -->
         <img id = "bannerImage" class = "img-fluid" src="/static/banner.png">
 
@@ -83,10 +90,11 @@
                 <h2 class = "text-center"> Job Listings </h2>
                 <div class="job-item">
                     {% for job in jobs %}
-                        {% include 'Job_Item.html' %}
+                        {% include 'Job/Job_Item.html' %}
                     {% endfor %}
                 </div>
             </div>
+            <span class="weak-text mt-2">All salaries are given in INR.</span>
 
             <!-- Contact us -->
             <div class = "text-center" id = "c-us-button">

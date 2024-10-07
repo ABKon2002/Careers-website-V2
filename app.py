@@ -80,6 +80,11 @@ def login():
 # def test123():
 #     return "You are logged in..."
 
+@app.route("/jobs")
+def show_jobs():
+    jobs = DO.loadJobs(query='select * from jobs')
+    return render_template('Jobs.html', jobs = jobs)
+
 @app.route("/logout", methods = ['POST', 'GET'])
 @login_required
 def logout():

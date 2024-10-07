@@ -1,0 +1,13 @@
+<!-- job-card.html -->
+<div class="job-card">
+    <div class="job-details">
+      <div class="job-title">{{ job['Title'] }}</div>
+      <div class="job-location">Location: {{ job['Location'] }}</div>
+      {% if job['Salary'] != '' %}
+        <div> Salary : {{job['Salary']}} LPA</div>
+      {% endif %}
+    </div>
+    <div>
+      <a href="/job/{{job['ID']}}" class="explore-btn">Explore</a>
+    </div>
+</div>
