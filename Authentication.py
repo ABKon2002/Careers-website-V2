@@ -1,8 +1,11 @@
+from database import DataOperations
 from sqlalchemy import text
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_login import UserMixin
+
+DO = DataOperations()
 
 class LoginForm(FlaskForm):
     username = StringField(validators= [InputRequired(), Length(min = 6, max = 20)], 
@@ -21,10 +24,13 @@ class RegisterForm(FlaskForm):
     password = PasswordField(validators= [InputRequired(), Length(min= 8, max= 20)],
                              render_kw= {"placeholder" : "Password"})
     
+    passkey = PasswordField(validators= [InputRequired(), Length(min= 6, max= 8)],
+                             render_kw= {"placeholder" : "Passkey"})
+    
     submit = SubmitField("Register")
     '''
     def validate_username(self, username):
-        existing_user_username = check_username(aiven_engine, username)
+        existing_user_username = DO.check_username(username)
         if existing_user_username:
             raise ValidationError("The username already exists. Please choose a different one.")
     '''

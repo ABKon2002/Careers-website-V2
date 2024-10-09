@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 from database import DataOperations
 import os
 import time
@@ -45,14 +45,18 @@ def hello_world():
 def register():
     form = RegisterForm()
     # After we submit the form...
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.passkey.data == os.getenv('ADMIN_PASSKEY'):
         new_user = {}
-        hashed_password = b_crypt.generate_password_hash(form.password.data)
+        #form.validate_username(request.form.get('username'))
         new_user['username'] = form.username.data
+        hashed_password = b_crypt.generate_password_hash(form.password.data)
         new_user['password'] = hashed_password
         DO.add_user(new_user)
+        flash('Registration successful!', 'success')
         time.sleep(2)     # Redirects to login after 2 seconds. 
         return redirect(url_for('login'))
+    else:
+        flash('Registration failed', 'danger')
 
     return render_template('Auth/register.html', form = form)
 
@@ -133,15 +137,18 @@ def confirm_submission(ID):
     DO.add_application_to_DB(ID, data)
     return render_template('Applicant View/4_applicationSuccess.html', ID = ID)
 
-@app.route("/admin")   # Make it require login
+@login_required
+@app.route("/admin")
 def admin_dashboard():
     return render_template('Admin View/0_adminDashboard.html')
 
-@app.route("/applications")     # Make it require login
+@login_required
+@app.route("/applications")
 def view_applications():
     JobList = DO.applications_by_job()
     return render_template('Admin View/1_Applicationview.html', applications_by_job = JobList)
 
+@login_required
 @app.route("/applicant/<app_ID>/review")
 def review_applicant(app_ID):
     application = DO.loadApplication(app_ID)
@@ -150,10 +157,12 @@ def review_applicant(app_ID):
         application['Tech_stack'] = list(application['Tech_stack'].split('. '))
     return render_template('Admin View/1.1_ApplicantDetails.html', application = application)
 
+@login_required
 @app.route("/add/job")
 def add_job_form():
     return render_template('Admin View/2_AddJob.html')
 
+@login_required
 @app.route("/admin/add_job", methods = ['POST'])
 def add_job():
     data = request.form

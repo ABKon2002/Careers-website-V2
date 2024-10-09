@@ -108,6 +108,10 @@
             <label for="psw-repeat"><b>Repeat Password</b></label>
             <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
             
+            <label><b>Admin Passkey</b></label>
+            {{form.passkey}}
+            <!-- <input type="password" placeholder="Admin Passkey" name="passkey" required> -->
+
             <label>
                 <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
             </label>
@@ -120,8 +124,8 @@
 
             <div class="clearfix">
                 <a href = '/' type="button" class="cancelbtn">Cancel</a>
-                {{form.submit}}
-                <button type="submit" class="signupbtn">Sign Up</button>
+             
+                <button type="submit" class="signupbtn" onclick={{form.submit}}> Sign Up</button>
             </div>
             </div>
         </form>
