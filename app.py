@@ -54,7 +54,7 @@ def register():
         time.sleep(2)     # Redirects to login after 2 seconds. 
         return redirect(url_for('login'))
 
-    return render_template('register.html', form = form)
+    return render_template('Auth/register.html', form = form)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -73,17 +73,12 @@ def login():
             if b_crypt.check_password_hash(password, form.password.data):
                 login_user(User(id, username, password))
                 return redirect(url_for('admin_dashboard'))
-    return render_template('login.html', form = form)
-
-# @app.route("/test123", methods = ['POST', 'GET'])
-# @login_required
-# def test123():
-#     return "You are logged in..."
+    return render_template('Auth/login.html', form = form)
 
 @app.route("/jobs")
 def show_jobs():
     jobs = DO.loadJobs(query='select * from jobs')
-    return render_template('Jobs.html', jobs = jobs)
+    return render_template('Job/Jobs.html', jobs = jobs)
 
 @app.route("/logout", methods = ['POST', 'GET'])
 @login_required
@@ -112,7 +107,7 @@ def get_job_by_ID(ID):
             Job['Responsibilities'] = Job['Responsibilities'].split('.')
             Job["Responsibilities"].pop(-1)
         
-        return render_template("Job_Page.html", job = Job)
+        return render_template("Applicant View/1_Job_Page.html", job = Job)
     else:
         return f"No Job entry found under {ID} :(", 404
 
@@ -120,7 +115,7 @@ def get_job_by_ID(ID):
 def apply_job(ID):
     job = DO.loadJob(ID)
     if job:
-        return render_template('applicationForm.html', job = job)
+        return render_template('Applicant View/2_applicationForm.html', job = job)
     else:
         return "Job post expired"
 
@@ -130,22 +125,22 @@ def application_submitted(ID):
     data = request.form
     data = dict(data)
     data['techStack'] = request.form.getlist('techStack')
-    return render_template('reviewApplication.html', data = data, ID = ID)
+    return render_template('Applicant View/3_reviewApplication.html', data = data, ID = ID)
 
 @app.route("/job/<ID>/confirm", methods = ['POST'])
 def confirm_submission(ID):
     global data
     DO.add_application_to_DB(ID, data)
-    return render_template('applicationSuccess.html', ID = ID)
+    return render_template('Applicant View/4_applicationSuccess.html', ID = ID)
 
 @app.route("/admin")   # Make it require login
 def admin_dashboard():
-    return render_template('adminDashboard.html')
+    return render_template('Admin View/0_adminDashboard.html')
 
 @app.route("/applications")     # Make it require login
 def view_applications():
     JobList = DO.applications_by_job()
-    return render_template('Applicationview.html', applications_by_job = JobList)
+    return render_template('Admin View/1_Applicationview.html', applications_by_job = JobList)
 
 @app.route("/applicant/<app_ID>/review")
 def review_applicant(app_ID):
@@ -153,18 +148,18 @@ def review_applicant(app_ID):
     application = dict(application)
     if application['Tech_stack']:
         application['Tech_stack'] = list(application['Tech_stack'].split('. '))
-    return render_template('ApplicantDetails.html', application = application)
+    return render_template('Admin View/1.1_ApplicantDetails.html', application = application)
 
 @app.route("/add/job")
 def add_job_form():
-    return render_template('AddJob.html')
+    return render_template('Admin View/2_AddJob.html')
 
 @app.route("/admin/add_job", methods = ['POST'])
 def add_job():
     data = request.form
     data = dict(data)
     DO.add_job(data)
-    return render_template('JobEntrySuccess.html')
+    return render_template('Admin View/2.1_JobEntrySuccess.html')
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug = True)

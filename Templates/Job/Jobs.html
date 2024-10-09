@@ -64,6 +64,7 @@
     </head>
 
     <body>
+        {% include 'Navigation/darkNavbar2.html' %}
         <div class="container">
             <h2 class="text-center mb-5">Job Openings</h2>
 
@@ -71,9 +72,22 @@
             <!-- Example loop with dummy job data -->
             <div id="job-listings">
             {% for job in jobs %}
-                {% include 'Job/Job_Card.html' %}
+                <div class="job-card">
+                    <div class="job-details">
+                    <div class="job-title">{{ job['Title'] }}</div>
+                    <div class="job-location">Location: {{ job['Location'] }}</div>
+                    {% if job['Salary'] != '' %}
+                        <div> Salary : {{job['Salary']}} LPA</div>
+                    {% endif %}
+                    </div>
+                    <div>
+                    <a href="/job/{{job['ID']}}" class="explore-btn">Explore</a>
+                    </div>
+                </div>
             {% endfor %}
         </div>
+
+        {% include 'Navigation/footer.html' %}
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
