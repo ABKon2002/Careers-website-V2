@@ -17,6 +17,11 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('You must be logged in to access this page.', 'danger')
+    return redirect(url_for('login'))
+
 DO = DataOperations()
 
 global data
@@ -43,21 +48,35 @@ def hello_world():
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
+    # Create an instance of our Registration Form
     form = RegisterForm()
     # After we submit the form...
-    if form.validate_on_submit() and form.passkey.data == os.getenv('ADMIN_PASSKEY'):
+    if form.validate_on_submit():
+        if form.passkey.data != os.getenv('ADMIN_PASSKEY'):
+            flash('Invalid Passkey! Retry', 'danger')
+            return redirect(url_for('register'))
+        # Create a new user dictionary
         new_user = {}
+        # Set the username equal to the form's input
         #form.validate_username(request.form.get('username'))
         new_user['username'] = form.username.data
+        # Hash the password using Bcrypt
         hashed_password = b_crypt.generate_password_hash(form.password.data)
+        # Set the password equal to the hashed password
         new_user['password'] = hashed_password
+        # Call the add_user function to store the user in our database
         DO.add_user(new_user)
+        # Flash a message to the user saying that the registration was successful
         flash('Registration successful!', 'success')
+        # Wait for 2 seconds before redirecting to the login page
         time.sleep(2)     # Redirects to login after 2 seconds. 
+        # Redirect to the login page
         return redirect(url_for('login'))
     else:
+        # Flash a message to the user saying that the registration failed
         flash('Registration failed', 'danger')
 
+    # Render the register.html template with the form
     return render_template('Auth/register.html', form = form)
 
 @login_manager.user_loader
