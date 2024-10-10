@@ -137,19 +137,19 @@ def confirm_submission(ID):
     DO.add_application_to_DB(ID, data)
     return render_template('Applicant View/4_applicationSuccess.html', ID = ID)
 
-@login_required
 @app.route("/admin")
+@login_required
 def admin_dashboard():
     return render_template('Admin View/0_adminDashboard.html')
 
-@login_required
 @app.route("/applications")
+@login_required
 def view_applications():
     JobList = DO.applications_by_job()
     return render_template('Admin View/1_Applicationview.html', applications_by_job = JobList)
 
-@login_required
 @app.route("/applicant/<app_ID>/review")
+@login_required
 def review_applicant(app_ID):
     application = DO.loadApplication(app_ID)
     application = dict(application)
@@ -157,13 +157,13 @@ def review_applicant(app_ID):
         application['Tech_stack'] = list(application['Tech_stack'].split('. '))
     return render_template('Admin View/1.1_ApplicantDetails.html', application = application)
 
-@login_required
 @app.route("/add/job")
+@login_required
 def add_job_form():
     return render_template('Admin View/2_AddJob.html')
 
-@login_required
 @app.route("/admin/add_job", methods = ['POST'])
+@login_required
 def add_job():
     data = request.form
     data = dict(data)
